@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #c7f1f7;
+    margin: 0;
+    padding: 20px;
+}
+
+article {
+    max-width: 800px;
+    margin: 40px auto; 
+    padding: 30px; 
+    background-color: #ffffff; 
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #1613cf;
+    font-size: 30px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex; /* Coloca os itens lado a lado */
+    gap: 20px; /* Adiciona um espaço entre os links */
+}
+
+nav a {
+    text-decoration: none; /* Remove o sublinhado padrão */
+    color: #333333; /* Define uma cor escura para o texto */
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Adiciona uma transição suave para as mudanças */
+}
+
+nav a:hover {
+    color: #1613cf; /* Muda a cor para o mesmo azul do seu h2 */
+    text-decoration: underline; /* Adiciona um sublinhado para reforçar o feedback visual */
+}
