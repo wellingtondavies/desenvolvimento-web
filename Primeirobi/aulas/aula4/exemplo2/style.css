@@ -1,0 +1,44 @@
+html{
+    background-color: aquamarine;
+}
+
+.Relative {
+    height: 200px;
+    width: 300px;
+    background-color: blue;
+    position: relative;
+}
+
+.Relative02 {
+    height: 20px;
+    width: 30px;
+    background-color: rgb(255, 0, 191);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.Absolute2 {
+    height: 200px;
+    width: 300px;
+    background-color: rgb(14, 177, 76);
+    margin-left: 250px;
+    position: absolute;
+}
+
+.Absolute {
+    height: 200px;
+    width: 300px;
+    background-color: rgb(29, 7, 124);
+    position: absolute;
+    z-index: 1;
+}
+
+.Fixed {
+    height: 100px;
+    width: 100px;
+    background-color: rgb(226, 10, 154);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
