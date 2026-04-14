@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.todo-app {
+  width: 100%;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+  margin-bottom: 16px;
+  text-align: center;
+  color: #222;
+}
+
+.todo-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+#taskInput {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ccd3da;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+#addTaskBtn {
+  border: 0;
+  background: #1e88e5;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#addTaskBtn:hover {
+  background: #166ec0;
+}
+
+#taskList {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+#taskList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#taskList li span {
+  flex: 1;
+}
+
+#taskList li span.done {
+  text-decoration: line-through;
+  color: #7a8591;
+}
