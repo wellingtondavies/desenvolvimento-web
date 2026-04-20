@@ -1,0 +1,31 @@
+.sidebar-card {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.sidebar-card h3 {
+  color: #1613cf;
+  margin-bottom: 12px;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar-list li {
+  margin-bottom: 10px;
+}
+
+.sidebar-list a {
+  text-decoration: none;
+  color: #333333;
+  font-weight: bold;
+}
+
+.sidebar-list a:hover {
+  color: #1613cf;
+  text-decoration: underline;
+}

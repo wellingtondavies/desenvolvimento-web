@@ -1,0 +1,26 @@
+.article-card {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.article-card h2 {
+  color: #1613cf;
+  margin-bottom: 8px;
+}
+
+.article-meta {
+  margin: 0 0 8px;
+  color: #333333;
+}
+
+.article-date {
+  display: block;
+  margin-bottom: 12px;
+  color: #555555;
+}
+
+.article-card p {
+  line-height: 1.6;
+}

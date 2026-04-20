@@ -1,0 +1,24 @@
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #333333;
+  font-weight: bold;
+}
+
+.nav-list a:hover {
+  color: #1613cf;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .nav-list {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
