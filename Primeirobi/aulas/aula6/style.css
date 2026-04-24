@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.title {
+    color: brown;
+}
+
+.dark-mode {
+    background-color: #090909;
+
+    .title {
+        color: white;
+    }
+}
