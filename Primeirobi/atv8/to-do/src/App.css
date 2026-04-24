@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #027efa7c;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.todo-app {
+  width: 100%;
+  max-width: 520px;
+  background: #1e0285c2;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
