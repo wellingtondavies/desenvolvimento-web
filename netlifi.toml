@@ -1,6 +1,6 @@
 # exemplo deu um netlify.toml
 [build]
-  base = "segundobi/dona-frost"
+  base = "Segundobi/FullNet"
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"
