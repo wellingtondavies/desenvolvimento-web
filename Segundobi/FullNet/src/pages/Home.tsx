@@ -104,7 +104,12 @@ export default function Home() {
                       </a>
                     </li>
                     <li>
-                      <a href="#testimonials">Depoimentos</a>
+                      <a
+                        onClick={() => setShowMobileMenu(!showMobileMenu)}
+                        href="#testimonials"
+                      >
+                        Depoimentos
+                      </a>
                     </li>
                     <li>
                       <a href="#pricing">Preços</a>
@@ -200,11 +205,12 @@ export default function Home() {
       </section>
 
       <section id="testimonials">
-        //perceba que está section só é fechada depois
         <header>
           <span>
             <p className="desktop-only">Conselho de quem conhece</p>
-            <h2>Cada cliente importa!</h2>
+            <h2>
+              Aqui na <strong>Full-Net</strong> cada cliente importa!
+            </h2>
           </span>
           <p>
             Quem já contratou sabe da qualidade da nossa rede, estamos tirando
