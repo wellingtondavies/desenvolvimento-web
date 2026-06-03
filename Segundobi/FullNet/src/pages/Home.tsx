@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Logo from "../assets/logo.svg";
 import Close from "../assets/close.svg";
 import Menu from "../assets/menu.svg";
-import Check from "../assets/Check.png";
+import Check from "../assets/check.png";
 import NetworkLok from "../assets/network_locked.svg";
 import NetworkMan from "../assets/network_manage.svg";
 import NetworkNode from "../assets/network_node.svg";
