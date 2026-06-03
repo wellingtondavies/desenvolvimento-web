@@ -19,10 +19,10 @@ import Card from "../components/card";
 
 import "../styles/header.css";
 import "../styles/hero.css";
-import "../styles/pricing.css";
 import "../styles/soluction.css";
 import "../styles/testimonials.css";
 import "../styles/utility.css";
+import "../styles/pricing.css";
 
 const solutionCards = [
   {
