@@ -1,26 +1,28 @@
+import { useEffect, useState } from "react";
+
 import Logo from "../assets/logo.svg";
-import HeroRectangleOne from "../assets/images/Rectangle13.png";
-import HeroRectangleTwo from "../assets/images/Rectangle14.png";
+import Close from "../assets/close.svg";
+import Menu from "../assets/menu.svg";
+import Check from "../assets/Check.png";
+import NetworkLok from "../assets/network_locked.svg";
+import NetworkMan from "../assets/network_manage.svg";
+import NetworkNode from "../assets/network_node.svg";
 import ImageClientOne from "../assets/Elon.png";
 import ImageClientTwo from "../assets/Ryan.png";
 import StarFull from "../assets/Star.png";
 import StarEmpty from "../assets/Star_2.png";
-import Check from "../assets/Check.png";
-import Menu from "../assets/menu.svg";
-import Close from "../assets/close.svg";
-import NetworkLok from "../assets/network_locked.svg";
-import NetworkMan from "../assets/network_manage.svg";
-import NetworkNode from "../assets/network_node.svg";
-import { useState } from "react";
-import { useEffect } from "react";
-import "../styles/header.css";
-import "../styles/hero.css";
-import "../styles/utility.css";
-import "../styles/soluction.css";
-import "../styles/testimonials.css";
-import "../styles/pricing.css";
+import HeroRectangleOne from "../assets/images/Rectangle13.png";
+import HeroRectangleTwo from "../assets/images/Rectangle14.png";
+
 import Button from "../components/button";
 import Card from "../components/card";
+
+import "../styles/header.css";
+import "../styles/hero.css";
+import "../styles/pricing.css";
+import "../styles/soluction.css";
+import "../styles/testimonials.css";
+import "../styles/utility.css";
 
 const solutionCards = [
   {
@@ -401,6 +403,7 @@ export default function Home() {
               <p>1 Gbps</p>
             </span>
           </div>
+          
         </section>
       </section>
     </>
