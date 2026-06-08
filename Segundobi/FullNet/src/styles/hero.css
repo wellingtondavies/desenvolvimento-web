@@ -1,22 +1,47 @@
 #hero {
-  background: var(--light-gray);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-color);
   border-top: 0.125rem solid #e4e4e4;
-  height: 90vh;
+  min-height: 90vh;
   display: flex;
 }
 
-#hero > img {
+#hero .hero-bg {
   position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero .hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  opacity: 0.5;
+}
+
+#hero .hero-rect {
+  position: absolute;
+  z-index: 1;
+}
+
+#hero .hero-rect-left {
+  top: 0;
+  left: 0;
+}
+
+#hero .hero-rect-right {
+  top: 0;
   right: 0;
-  height: 60%;
-  padding-left: 30%;
 }
 
 #hero p {
-  color: var(--second-text-color);
+  color: black
 }
 
 #hero .content {
+  position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -33,18 +58,12 @@
 
 @media (width >= 1280px) {
   #hero {
-    background: var(--bg-color);
     border-top: none;
-    > span {
-      position: absolute;
-      top: 0;
+
+    .hero-bg img {
+      object-position: center;
     }
 
-    > img {
-      top: 0;
-      height: 82%;
-      padding-left: 55%;
-    }
     .content p {
       width: 80%;
       align-self: center;

@@ -7,8 +7,8 @@ import Check from "../assets/check.png";
 import NetworkLok from "../assets/network_locked.svg";
 import NetworkMan from "../assets/network_manage.svg";
 import NetworkNode from "../assets/network_node.svg";
-import ImageClientOne from "../assets/Elon.png";
-import ImageClientTwo from "../assets/Ryan.png";
+import ImageClientOne from "../assets/wellington.png";
+import ImageClientTwo from "../assets/user.png";
 import StarFull from "../assets/Star.png";
 import StarEmpty from "../assets/Star_2.png";
 import HeroRectangleOne from "../assets/images/Rectangle13.png";
@@ -23,6 +23,9 @@ import "../styles/soluction.css";
 import "../styles/testimonials.css";
 import "../styles/utility.css";
 import "../styles/pricing.css";
+import "../styles/contact.css";
+import Footer from "../components/footer";
+import HeroBg from "../assets/smile.png";
 
 const solutionCards = [
   {
@@ -30,32 +33,105 @@ const solutionCards = [
     alt: "ícone internet bloqueada",
     title: "Internet Bloqueada?",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta beatae sunt magni suscipit esse sed totam eos repellat minima, autem vero accusantium voluptates reiciendis animi minus consequuntur. Tempore, eum libero.",
+      "Tranquilo, somos flexiveis, se você tiver alguma pendência com a gente, ou precisar de um tempo para resolver algo, é só entrar em contato que a gente segura sua internet em ate 18 dias apos o vencimento da mensalidade, e quando estiver tudo certo, é só avisar que a gente desbloqueia, sem burocracia e sem stress.",
   },
   {
     icon: NetworkMan,
     alt: "ícone gerenciamento de rede",
     title: "Bora gerenciar a rede?",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta beatae sunt magni suscipit esse sed totam eos repellat minima, autem vero accusantium voluptates reiciendis animi minus consequuntur. Tempore, eum libero.",
+      "Somos especializados em cuidar da sua rede, desde a fibra optica ate a aconexão wi-fi, cabos de rede e demais serviços, com um unico objetivo garantir o melhor desempenho e segurança para sua infraestrutura.",
   },
   {
     icon: NetworkNode,
     alt: "ícone nó de rede",
-    title: "Nó de Rede",
+    title: "Nó de Rede?",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta beatae sunt magni suscipit esse sed totam eos repellat minima, autem vero accusantium voluptates reiciendis animi minus consequuntur. Tempore, eum libero.",
+      "Com a tecnologia Mash, "+" LIMITE DE 5 ROTEADORES "+", oferecemos soluções avançadas para cobertura, conectividade e desempenho otimizado, garantindo uma experiência de internet superior para nossos clientes.",
   },
 ];
 
 export default function Home() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  // estado para armazenar os valores do formulário de contato
+  // Valores para capturar dados dos inputs
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function sendContactEmail() {
+    const response = await fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        message,
+      }),
+    });
+
+    if (!response.ok) {
+      const body = await response.json().catch(() => ({}));
+      throw new Error(body.error ?? "Erro ao enviar mensagem.");
+    }
+  }
+
+  // função para lidar com o envio do formulário de contato, incluindo validação e feedback para o usuário
+  const [isSending, setIsSending] = useState(false);
+  const [feedback, setFeedback] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  // função para lidar com o envio do formulário de contato, incluindo validação e feedback para o usuário
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email.trim() || !message.trim()) {
+      setFeedback({
+        type: "error",
+        message: "Preencha o email e a mensagem antes de enviar.",
+      });
+      return;
+    }
+
+    if (!emailRegex.test(email.trim())) {
+      setFeedback({
+        type: "error",
+        message: "Digite um email válido.",
+      });
+      return;
+    }
+
+    setIsSending(true);
+    setFeedback(null);
+
+    try {
+      await sendContactEmail();
+      setEmail("");
+      setMessage("");
+      setFeedback({
+        type: "success",
+        message: "Mensagem enviada com sucesso.",
+      });
+    } catch (error) {
+      setFeedback({
+        type: "error",
+        message:
+          error instanceof Error ? error.message : "Erro ao enviar mensagem.",
+      });
+    } finally {
+      setIsSending(false);
+    }
+  }
+
   useEffect(() => {
     const html = document.querySelector("html");
     if (html) {
       html.style.overflow = showMobileMenu ? "hidden" : "auto";
     }
   }, [showMobileMenu]);
+
   return (
     <>
       <header className="container py-sm">
@@ -116,10 +192,20 @@ export default function Home() {
                       </a>
                     </li>
                     <li>
-                      <a href="#pricing">Preços</a>
+                      <a
+                        onClick={() => setShowMobileMenu(!showMobileMenu)}
+                        href="#pricing"
+                      >
+                        Preços
+                      </a>
                     </li>
                     <li>
-                      <a href="#contact">Contato</a>
+                      <a
+                        onClick={() => setShowMobileMenu(!showMobileMenu)}
+                        href="#contact"
+                      >
+                        Contato
+                      </a>
                     </li>
                     <li>
                       <a className="reverse-color" href="#">
@@ -153,20 +239,28 @@ export default function Home() {
       </header>
 
       <section id="hero">
-        <span className="desktop-only">
+        <div className="hero-bg" aria-hidden="true">
+          <img src={HeroBg} alt="" />
+        </div>
+
+        <span className="desktop-only hero-rect hero-rect-left">
           <img src={HeroRectangleTwo} alt="Retângulo 1" />
         </span>
-        <img src={HeroRectangleOne} alt="Retângulo 2" />
+
+        <span className="hero-rect hero-rect-right">
+          <img src={HeroRectangleOne} alt="Retângulo 2" />
+        </span>
+
         <div className="container content">
           <p className="desktop-only">Olá</p>
           <h1>
-            Internet residencial de alta velocidade, com as melhores velocidades
+            A internet com as melhores velocidades
             e preços do mercado!
           </h1>
           <p>
-            ja pensou em jogar se conectado com a melhor internet do mercado?
+            Ja pensou em jogar conectado com a melhor internet do mercado?
             aqui na Full-Net isso é possível, venha conhecer nossos planos e
-            aproveite o melhor da internet para jogar, assistir filmes e séries,
+            aproveite o melhor da internet, para jogar, assistir filmes e séries,
             estudar e muito mais!
           </p>
           <div className="flex gap-1">
@@ -190,7 +284,7 @@ export default function Home() {
           </span>
           <p>
             Internet é com a gente! A <strong>Full-Net </strong>
-            já conquistou diversos clientes, seja você mais um deles, veja tudo
+            já conquistou diversos clientes, junte-se a eles e veja tudo
             que pode ganhar com nossos serviços.
           </p>
         </header>
@@ -217,9 +311,8 @@ export default function Home() {
             </h2>
           </span>
           <p>
-            Quem já contratou sabe da qualidade da nossa rede, estamos tirando
-            aquela ideia de que internet lenta tem de ser algo inaceitável,
-            acompanhe abaixo os testemunhos de quem já comprou e aprovou.
+            Quem já contratou conhece a qualidade de nossa rede, internet lenta é algo inaceitável,
+            acompanhe abaixo os testemunhos de quem já contratou e aprovou.
           </p>
         </header>
         <section className="carousel">
@@ -228,45 +321,20 @@ export default function Home() {
               <img src={ImageClientOne} alt="Imagem perfil cliente" />
               <span className="testimony">
                 <p>
-                  Certamente o mercado chinês de eletricos está bombando, só
-                  existe uma coisa melhor do que isso, provar uma boa internet.
+                  Se conectar com a melhor internet do mercado é incrível, só
+                  existe uma coisa melhor do que isso, toda essa estabilidade para aproveitar uma boa internet.
                 </p>
               </span>
               <span className="rating">
-                <img
-                  src={StarFull}
-                  alt="ícone estrela"
-                  width={22}
-                  height={20}
-                />
-                <img
-                  src={StarFull}
-                  alt="ícone estrela"
-                  width={22}
-                  height={20}
-                />
-                <img
-                  src={StarFull}
-                  alt="ícone estrela"
-                  width={22}
-                  height={20}
-                />
-                <img
-                  src={StarFull}
-                  alt="ícone estrela"
-                  width={22}
-                  height={20}
-                />
-                <img
-                  src={StarEmpty}
-                  alt="ícone estrela sem fundo"
-                  width={20}
-                  height={22}
-                />
+                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
+                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
+                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
+                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
+                <img src={StarEmpty} alt="ícone estrela sem fundo" width={20} height={22} />
               </span>
               <span className="names">
-                <p>Ellon Ma</p>
-                <p>CEO BING CHILLING</p>
+                <p>Wellington Davies</p>
+                <p>Eng. de Software</p>
               </span>
             </div>
           </div>
@@ -282,40 +350,15 @@ export default function Home() {
                 </p>
               </span>
               <span className="rating">
-                <img
-                  src={StarFull}
-                  alt="ícone estrela"
-                  width={22}
-                  height={20}
-                />
-                <img
-                  src={StarFull}
-                  alt="ícone estrela"
-                  width={22}
-                  height={20}
-                />
-                <img
-                  src={StarFull}
-                  alt="ícone estrela"
-                  width={22}
-                  height={20}
-                />
-                <img
-                  src={StarFull}
-                  alt="ícone estrela"
-                  width={22}
-                  height={20}
-                />
-                <img
-                  src={StarEmpty}
-                  alt="ícone estrela sem fundo"
-                  width={20}
-                  height={22}
-                />
+                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
+                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
+                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
+                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
+                <img src={StarEmpty} alt="ícone estrela sem fundo" width={20} height={22} />
               </span>
               <span className="names">
-                <p>Ryan brolini</p>
-                <p>CEO Gardenals ltda</p>
+                <p>Matheus brolini</p>
+                <p>Tecnico de TI</p>
               </span>
             </div>
           </div>
@@ -335,7 +378,7 @@ export default function Home() {
               <p>Velocidade de até 100 Mbps</p>
             </span>
             <h2>Teste 3 dias grátis</h2>
-            <Button text="Pedir agora" secondary key="free" />
+            <Button text="Pedir agora" key="free" />
             <span className="hr" />
             <span className="features">
               <img src={Check} alt="ícone check" width={24} height={24} />
@@ -362,15 +405,15 @@ export default function Home() {
             <span className="hr" />
             <span className="features">
               <img src={Check} alt="ícone check" width={24} height={24} />
-              <p>Wi-fi gratis</p>
+              <p>Wi-fi gratis + Casa conectada</p>
             </span>
             <span className="features">
               <img src={Check} alt="ícone check" width={24} height={24} />
-              <p>5 Suporte Premium</p>
+              <p> Suporte Premium</p>
             </span>
             <span className="features">
               <img src={Check} alt="ícone check" width={24} height={24} />
-              <p>300 Mbps</p>
+              <p>600 Mbps</p>
             </span>
           </div>
           <div className="pricing-card empresarial">
@@ -392,20 +435,69 @@ export default function Home() {
             <span className="hr" />
             <span className="features">
               <img src={Check} alt="ícone check" width={24} height={24} />
-              <p>Wi-fi gratis</p>
+              <p>Wi-fi gratis + Baixa latencia</p>
             </span>
             <span className="features">
               <img src={Check} alt="ícone check" width={24} height={24} />
-              <p>10 Suporte Premium</p>
+              <p> Suporte Premium</p>
             </span>
             <span className="features">
               <img src={Check} alt="ícone check" width={24} height={24} />
               <p>1 Gbps</p>
             </span>
           </div>
-          
         </section>
       </section>
+
+      <section id="contact" className="contact-section">
+        <div className="container">
+          <header className="contact-header">
+            <p>Envie sua dúvida</p>
+            <h2>Entre em contato</h2>
+            <p>
+              Entre em contato, estamos dispostos a tirar qualquer dúvida, seja
+              um orçamento, uma dúvida técnica ou sobre nossos produtos.
+            </p>
+          </header>
+
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <label className="contact-field">
+              <span>Seu Email</span>
+              <input
+                type="email"
+                placeholder="Seu email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </label>
+
+            <label className="contact-field">
+              <span>Mensagem</span>
+              <textarea
+                placeholder="Motivo do contato. Ex: Gostei muito do produto x, poderia me enviar um orçamento?"
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                rows={5}
+                required
+              />
+            </label>
+
+            <Button text={isSending ? "Enviando..." : "Enviar"} />
+            {feedback && (
+              <p
+                className={`contact-feedback ${
+                  feedback.type === "success" ? "success" : "error"
+                }`}
+              >
+                {feedback.message}
+              </p>
+            )}
+          </form>
+        </div>
+      </section>
+
+      <Footer />
     </>
   );
 }
