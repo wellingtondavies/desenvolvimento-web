@@ -21,7 +21,7 @@
   }
 
   p {
-    color: var(--second-text-color);
+    color: var(--primary-color);
   }
 
   .carousel {

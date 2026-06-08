@@ -252,7 +252,6 @@ export default function Home() {
         </span>
 
         <div className="container content">
-          <p className="desktop-only">Olá</p>
           <h1>
             A internet com as melhores velocidades
             e preços do mercado!
