@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import Logo from "../assets/logo.svg";
 import Close from "../assets/close.svg";
@@ -47,7 +48,9 @@ const solutionCards = [
     alt: "ícone nó de rede",
     title: "Nó de Rede?",
     description:
-      "Com a tecnologia Mash, "+" LIMITE DE 5 ROTEADORES "+", oferecemos soluções avançadas para cobertura, conectividade e desempenho otimizado, garantindo uma experiência de internet superior para nossos clientes.",
+      "Com a tecnologia Mash, " +
+      " LIMITE DE 5 ROTEADORES " +
+      ", oferecemos soluções avançadas para cobertura, conectividade e desempenho otimizado, garantindo uma experiência de internet superior para nossos clientes.",
   },
 ];
 
@@ -80,10 +83,19 @@ export default function Home() {
     type: "success" | "error";
     message: string;
   } | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
+  // função para lidar com a mudança do token do reCAPTCHA, atualizando o estado com o novo token
+  function handleCaptchaChange(token: string | null) {
+    console.log("recaptcha token:", token);
+    setCaptchaToken(token);
+  }
 
   // função para lidar com o envio do formulário de contato, incluindo validação e feedback para o usuário
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log("handleSubmit called", { email, message, captchaToken });
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -103,6 +115,14 @@ export default function Home() {
       return;
     }
 
+    if (!captchaToken) {
+      setFeedback({
+        type: "error",
+        message: "Confirme o reCAPTCHA antes de enviar.",
+      });
+      return;
+    }
+
     setIsSending(true);
     setFeedback(null);
 
@@ -110,6 +130,8 @@ export default function Home() {
       await sendContactEmail();
       setEmail("");
       setMessage("");
+      setCaptchaToken(null);
+      recaptchaRef.current?.reset();
       setFeedback({
         type: "success",
         message: "Mensagem enviada com sucesso.",
@@ -252,15 +274,12 @@ export default function Home() {
         </span>
 
         <div className="container content">
-          <h1>
-            A internet com as melhores velocidades
-            e preços do mercado!
-          </h1>
+          <h1>A internet com as melhores velocidades e preços do mercado!</h1>
           <p>
-            Ja pensou em jogar conectado com a melhor internet do mercado?
-            aqui na Full-Net isso é possível, venha conhecer nossos planos e
-            aproveite o melhor da internet, para jogar, assistir filmes e séries,
-            estudar e muito mais!
+            Ja pensou em jogar conectado com a melhor internet do mercado? aqui
+            na Full-Net isso é possível, venha conhecer nossos planos e
+            aproveite o melhor da internet, para jogar, assistir filmes e
+            séries, estudar e muito mais!
           </p>
           <div className="flex gap-1">
             <span>
@@ -283,8 +302,8 @@ export default function Home() {
           </span>
           <p>
             Internet é com a gente! A <strong>Full-Net </strong>
-            já conquistou diversos clientes, junte-se a eles e veja tudo
-            que pode ganhar com nossos serviços.
+            já conquistou diversos clientes, junte-se a eles e veja tudo que
+            pode ganhar com nossos serviços.
           </p>
         </header>
 
@@ -310,8 +329,9 @@ export default function Home() {
             </h2>
           </span>
           <p>
-            Quem já contratou conhece a qualidade de nossa rede, internet lenta é algo inaceitável,
-            acompanhe abaixo os testemunhos de quem já contratou e aprovou.
+            Quem já contratou conhece a qualidade de nossa rede, internet lenta
+            é algo inaceitável, acompanhe abaixo os testemunhos de quem já
+            contratou e aprovou.
           </p>
         </header>
         <section className="carousel">
@@ -321,15 +341,41 @@ export default function Home() {
               <span className="testimony">
                 <p>
                   Se conectar com a melhor internet do mercado é incrível, só
-                  existe uma coisa melhor do que isso, toda essa estabilidade para aproveitar uma boa internet.
+                  existe uma coisa melhor do que isso, toda essa estabilidade
+                  para aproveitar uma boa internet.
                 </p>
               </span>
               <span className="rating">
-                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
-                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
-                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
-                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
-                <img src={StarEmpty} alt="ícone estrela sem fundo" width={20} height={22} />
+                <img
+                  src={StarFull}
+                  alt="ícone estrela"
+                  width={22}
+                  height={20}
+                />
+                <img
+                  src={StarFull}
+                  alt="ícone estrela"
+                  width={22}
+                  height={20}
+                />
+                <img
+                  src={StarFull}
+                  alt="ícone estrela"
+                  width={22}
+                  height={20}
+                />
+                <img
+                  src={StarFull}
+                  alt="ícone estrela"
+                  width={22}
+                  height={20}
+                />
+                <img
+                  src={StarEmpty}
+                  alt="ícone estrela sem fundo"
+                  width={20}
+                  height={22}
+                />
               </span>
               <span className="names">
                 <p>Wellington Davies</p>
@@ -349,11 +395,36 @@ export default function Home() {
                 </p>
               </span>
               <span className="rating">
-                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
-                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
-                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
-                <img src={StarFull} alt="ícone estrela" width={22} height={20} />
-                <img src={StarEmpty} alt="ícone estrela sem fundo" width={20} height={22} />
+                <img
+                  src={StarFull}
+                  alt="ícone estrela"
+                  width={22}
+                  height={20}
+                />
+                <img
+                  src={StarFull}
+                  alt="ícone estrela"
+                  width={22}
+                  height={20}
+                />
+                <img
+                  src={StarFull}
+                  alt="ícone estrela"
+                  width={22}
+                  height={20}
+                />
+                <img
+                  src={StarFull}
+                  alt="ícone estrela"
+                  width={22}
+                  height={20}
+                />
+                <img
+                  src={StarEmpty}
+                  alt="ícone estrela sem fundo"
+                  width={20}
+                  height={22}
+                />
               </span>
               <span className="names">
                 <p>Matheus brolini</p>
@@ -482,7 +553,18 @@ export default function Home() {
               />
             </label>
 
-            <Button text={isSending ? "Enviando..." : "Enviar"} />
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+              onChange={handleCaptchaChange}
+            />
+
+            <Button
+              text={isSending ? "Enviando..." : "Enviar"}
+              disabled={isSending || !captchaToken}
+              type="submit"
+            />
+
             {feedback && (
               <p
                 className={`contact-feedback ${
